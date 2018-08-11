@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oasystem.dao.OrganDao">
+
+	<select id="getOrgans" resultType="com.oasystem.model.Organ">
+		select * from organ
+	</select>
+	<insert id="addOrgan" parameterType="String">
+	 insert into organ(o_name) values (#{o_name})
+	</insert>
+	<update id="updateorgan">
+		update organ o,roles_permissions r set o.o_name=#{o_name},r.o_name="#{o_name}" where o.id=#{id} and r.o_name=#{oldname}
+	</update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oasystem.dao.MainDao">
+
+
+	<!--  添加用户信息 -->
+	<insert id="addUser" parameterType="String">
+		INSERT INTO
+		roles_permissions(m_name,gender,phone,email,
+		password,permission,role_name)
+		VALUES(#{username},#{gender},#{phone},#{email},#{permission},#{permission},#{username})
+
+	</insert>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="int">
+		DELETE FROM users
+		WHERE id = #{id}
+	</delete>
+	
+	<!-- 更新用户 -->
+	<update id="UpdateUser" parameterType="String">
+		UPDATE users
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="username != null and username != ''">username=#{username},</if>
+			<if test="password != null and password != ''">password=#{password},</if>
+			<if test="permission != null and permission != ''">permission=#{permission}</if>
+		</trim>
+		WHERE username = #{username}
+	</update>
+	
+	<!-- 更新用户权限 -->
+	<update id="UpdataUserPermission" parameterType="String">
+		UPDATE roles_permissions
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="role_name != null and role_name != ''">role_name=#{role_name},</if>
+			<if test="permission != null and permission != ''">permission=#{permission}</if>
+		</trim>
+		WHERE role_name = #{role_name}
+	</update>
+	<!-- 初始化用户管理页面 -->
+	<select id="getUserInfo" parameterType="int" resultType="com.oasystem.model.Users">
+		select * from roles_permissions where id = #{id}
+	</select>
+
+</mapper>

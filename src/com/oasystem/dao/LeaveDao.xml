@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oasystem.dao.LeaveDao">
+	<select id="listleaves" resultType="com.oasystem.model.Leave">
+		select * from leaves where m_name=#{username} order by(case when operation=0 then 1 else 4 end ),id desc
+	</select>
+	<select id="mlistleaves" resultType="com.oasystem.model.Leave">
+		select * from leaves order by (
+    case
+     when operation=0  then 1 else 4 end ),id desc 
+	</select>
+	<update id="leaveState" parameterType="int">
+		update leaves set leaves.state=#{state},leaves.operation=1 where id=#{id}
+	</update>
+	<insert id="addLeave">
+		insert into leaves (m_name,reason,ldate,hdate) values (#{m_name},#{reason},#{ldate},#{hdate})
+	</insert>
+	<delete id="deleteLeave">
+		delete from leaves where id=#{id}
+	</delete>
+</mapper>

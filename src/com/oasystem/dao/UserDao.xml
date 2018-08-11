@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oasystem.dao.UserDao">
+
+	<!-- 更新用户个人信息 -->
+	<update id="updatePerson" >
+		UPDATE roles_permissions
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="birth != null">birth=#{birth},</if>
+			<if test="gender != null">gender=#{gender},</if>
+			<if test="zhengzhi != null">zhengzhi=#{zhengzhi},</if>
+			<if test="rz_time != null">rz_time=#{rz_time},</if>
+			<if test="job != null">job=#{job}</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+	<update id="updatePersonM" >
+		UPDATE roles_permissions
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="m_name != null">m_name=#{m_name},</if>
+			<if test="gender != null">gender=#{gender},</if>
+			<if test="job != null">job=#{job},</if>
+			<if test="permission != null">permission=#{permission},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="o_name != null">o_name=#{o_name},</if>
+			<if test="m_name != null">role_name=#{m_name}</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+	<select id="getUserId" parameterType="String" resultType="int">
+		select id from roles_permissions where m_name=#{username} and password=#{password}
+	</select>
+	<select id="listUsers" resultType="com.oasystem.model.Users">
+		select * from roles_permissions
+	</select>
+	<select id="ValidateName" resultType="com.oasystem.model.Users">
+		select * from roles_permissions where m_name=#{m_name}
+	</select> 
+	<insert id="addPerson">
+		insert ignore into roles_permissions (m_name,gender,job,permission,o_name, password,role_name) 
+		values ( #{m_name},#{gender},#{job},#{permission},#{o_name}, #{password},#{m_name})
+	</insert>
+	<delete id="deletePerson">
+		delete from roles_permissions where id=#{id}
+	</delete>
+
+</mapper>
